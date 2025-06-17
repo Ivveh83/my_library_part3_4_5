@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -27,6 +29,9 @@ public class AppUser {
     @JoinColumn(name = "details_id")
     private Details userDetails;
 
+    @OneToMany(mappedBy = "borrower", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    List<BookLoan> bookLoans = new ArrayList<>();
+
 
     public AppUser(String userName, String password, Details userDetails) {
         this.username = userName;
@@ -37,5 +42,15 @@ public class AppUser {
     @PrePersist
     public void prePersist() {
         this.regDate = LocalDate.now();
+    }
+
+    void addBookLoan(BookLoan bookLoan) {
+        bookLoans.add(bookLoan);
+        bookLoan.setBorrower(this);
+    }
+
+    void removeBookLoan(BookLoan bookLoan) {
+        bookLoans.remove(bookLoan);
+        bookLoan.setBorrower(null);
     }
 }

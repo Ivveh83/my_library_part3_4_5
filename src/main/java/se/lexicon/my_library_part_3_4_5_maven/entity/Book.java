@@ -1,12 +1,16 @@
 package se.lexicon.my_library_part_3_4_5_maven.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 import java.util.Set;
 
-@Data
-
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
+@EqualsAndHashCode
 
 @Entity
 public class Book {
@@ -25,5 +29,16 @@ public class Book {
             inverseJoinColumns = @JoinColumn(name = "author_id"))
     private Set<Author> authors;
 
+    public Book(String isbn, String title, int maxLoanDays) {
+        this.isbn = isbn;
+        this.title = title;
+        this.maxLoanDays = maxLoanDays;
+    }
 
+    public void addAuthor(Author author) {
+        authors.add(author);
+    }
+    public void removeAuthor(Author author) {
+        authors.remove(author);
+    }
 }

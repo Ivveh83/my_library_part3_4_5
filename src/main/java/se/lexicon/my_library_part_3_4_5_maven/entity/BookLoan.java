@@ -11,6 +11,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @ToString
 @EqualsAndHashCode
+
 @Entity
 public class BookLoan {
     @Id
@@ -32,5 +33,17 @@ public class BookLoan {
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn()
     private Book book;
+
+    public BookLoan(AppUser borrower, Book book) {
+        this.borrower = borrower;
+        this.book = book;
+    }
+
+    @PrePersist
+    public void prePersist() {
+        this.loanDate = LocalDate.now();
+        this.dueDate = loanDate.plusDays(book.getMaxLoanDays());
+        this.returned = false;
+    }
 
 }

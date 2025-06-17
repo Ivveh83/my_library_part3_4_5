@@ -34,8 +34,17 @@ public class BookLoan {
     @JoinColumn()
     private Book book;
 
-    public BookLoan(AppUser borrower, Book book) {
+    /**
+     * Creates a new BookLoan object.
+     *
+     * @param borrower the user who borrows the book; must not be null
+     * @param book the book being borrowed; must be available
+     * @throws IllegalArgumentException if the book is null or not available
+     */
+    public BookLoan(AppUser borrower, Book book) throws IllegalArgumentException{
+        if (borrower == null) throw new IllegalArgumentException("Borrower must not be null");
         this.borrower = borrower;
+        if (!book.isAvailable()) throw new IllegalArgumentException("Book is not available");
         this.book = book;
     }
 

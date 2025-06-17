@@ -1,6 +1,7 @@
 package se.lexicon.my_library_part_3_4_5_maven.entity;
 
 import jakarta.persistence.*;
+import jakarta.transaction.Transactional;
 import lombok.*;
 
 import java.util.Set;
@@ -23,6 +24,7 @@ public class Book {
     @Column(nullable = false)
     private String title;
     private int maxLoanDays;
+    private boolean available;
     @ManyToMany
     @JoinTable(name = "book_author",
             joinColumns = @JoinColumn(name = "book_id"),
@@ -35,9 +37,11 @@ public class Book {
         this.maxLoanDays = maxLoanDays;
     }
 
+    @Transactional
     public void addAuthor(Author author) {
         authors.add(author);
     }
+    @Transactional
     public void removeAuthor(Author author) {
         authors.remove(author);
     }

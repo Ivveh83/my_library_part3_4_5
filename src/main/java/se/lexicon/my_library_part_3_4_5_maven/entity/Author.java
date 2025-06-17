@@ -1,6 +1,7 @@
 package se.lexicon.my_library_part_3_4_5_maven.entity;
 
 import jakarta.persistence.*;
+import jakarta.transaction.Transactional;
 import lombok.*;
 
 import java.util.HashSet;
@@ -30,10 +31,12 @@ public class Author {
         this.lastName = lastName;
     }
 
+    @Transactional
     public void addWrittenBook(Book book) {
         writtenBooks.add(book);
         book.addAuthor(this);
     }
+    @Transactional
     public void removeWrittenBook(Book book) {
         writtenBooks.remove(book);
         book.removeAuthor(this);

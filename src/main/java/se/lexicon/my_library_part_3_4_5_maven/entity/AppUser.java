@@ -1,6 +1,7 @@
 package se.lexicon.my_library_part_3_4_5_maven.entity;
 
 import jakarta.persistence.*;
+import jakarta.transaction.Transactional;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -44,11 +45,14 @@ public class AppUser {
         this.regDate = LocalDate.now();
     }
 
+    @Transactional
     void addBookLoan(BookLoan bookLoan) {
+        bookLoan.getBook().setAvailable(false);
         bookLoans.add(bookLoan);
         bookLoan.setBorrower(this);
     }
 
+    @Transactional
     void removeBookLoan(BookLoan bookLoan) {
         bookLoans.remove(bookLoan);
         bookLoan.setBorrower(null);

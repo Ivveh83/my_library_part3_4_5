@@ -1,0 +1,36 @@
+package se.lexicon.my_library_part_3_4_5_maven.entity;
+
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.time.LocalDate;
+
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
+@EqualsAndHashCode
+@Entity
+public class BookLoan {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    @Column(nullable = false)
+    private LocalDate loanDate;
+
+    @Column(nullable = false)
+    private LocalDate dueDate;
+
+    private Boolean returned;
+
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JoinColumn()
+    private AppUser borrower;
+
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JoinColumn()
+    private Book book;
+
+}

@@ -65,6 +65,7 @@ class AppUserRepositoryTest {
     void findByDetailsId() {
         Details details = new Details("email", "name", LocalDate.now());
         AppUser appUser1 = new AppUser("User1", "password1", detailsRepository.save(details));
+        appUserRepository.save(appUser1);
         Optional<AppUser> optionalAppUser = appUserRepository.findByDetailsId(1);
         assertTrue(optionalAppUser.isPresent());
         assertEquals(appUser1.getUsername(), optionalAppUser.get().getUsername());
@@ -75,6 +76,7 @@ class AppUserRepositoryTest {
     void findByUserDetailsEmailIgnoreCase() {
         Details details = new Details("email", "name", LocalDate.now());
         AppUser appUser1 = new AppUser("User1", "password1", detailsRepository.save(details));
+        appUserRepository.save(appUser1);
         Optional<AppUser> optionalAppUser = appUserRepository.findByUserDetailsEmailIgnoreCase("EMAIL");
         assertTrue(optionalAppUser.isPresent());
         assertEquals(appUser1.getId(), optionalAppUser.get().getId());

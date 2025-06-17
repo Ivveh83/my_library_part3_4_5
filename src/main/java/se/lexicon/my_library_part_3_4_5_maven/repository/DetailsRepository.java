@@ -1,12 +1,13 @@
 package se.lexicon.my_library_part_3_4_5_maven.repository;
 
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 import se.lexicon.my_library_part_3_4_5_maven.entity.Details;
 
 import java.util.List;
 import java.util.Optional;
 
-
+@Repository
 public interface DetailsRepository extends CrudRepository<Details, Integer> {
     Optional<Details> findByEmail(String email);
 

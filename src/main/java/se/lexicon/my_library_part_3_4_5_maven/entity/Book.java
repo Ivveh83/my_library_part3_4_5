@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.transaction.Transactional;
 import lombok.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -25,7 +26,7 @@ public class Book {
     private String title;
     private int maxLoanDays;
     private boolean available;
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(name = "book_author",
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "author_id"))
@@ -37,11 +38,10 @@ public class Book {
         this.maxLoanDays = maxLoanDays;
     }
 
-    @Transactional
     public void addAuthor(Author author) {
+        if (authors == null) authors = new HashSet<>();
         authors.add(author);
     }
-    @Transactional
     public void removeAuthor(Author author) {
         authors.remove(author);
     }

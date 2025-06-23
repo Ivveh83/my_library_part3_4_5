@@ -45,14 +45,12 @@ public class AppUser {
         this.regDate = LocalDate.now();
     }
 
-    @Transactional
     void addBookLoan(BookLoan bookLoan) {
         bookLoan.getBook().setAvailable(false);
         bookLoans.add(bookLoan);
         bookLoan.setBorrower(this);
     }
 
-    @Transactional
     void removeBookLoan(BookLoan bookLoan) {
         bookLoans.remove(bookLoan);
         bookLoan.setBorrower(null);

@@ -31,12 +31,10 @@ public class Author {
         this.lastName = lastName;
     }
 
-    @Transactional
     public void addWrittenBook(Book book) {
         writtenBooks.add(book);
         book.addAuthor(this);
     }
-    @Transactional
     public void removeWrittenBook(Book book) {
         writtenBooks.remove(book);
         book.removeAuthor(this);
